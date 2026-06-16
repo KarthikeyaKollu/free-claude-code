@@ -31,9 +31,9 @@ class CodexCliAdapter:
     display_name = "Codex CLI"
     default_binary = "codex"
     install_hint = "Install Codex with: npm install -g @openai/codex"
-    trace_stage = "claude_cli"
-    process_launch_event = "claude_cli.process.launch"
-    trace_source = "claude_cli"
+    trace_stage = "codex_cli"
+    process_launch_event = "codex_cli.process.launch"
+    trace_source = "codex_cli"
 
     def build_task_invocation(
         self,
@@ -49,8 +49,9 @@ class CodexCliAdapter:
             auth_token=config.auth_token,
             base_env=base_env,
         )
+        codex_bin = getattr(config, "codex_bin", None) or self.default_binary
         cmd = self._task_command(
-            codex_bin=getattr(config, "codex_bin", config.claude_bin),
+            codex_bin=codex_bin,
             prompt=request.prompt,
             session_id=request.session_id,
             fork_session=request.fork_session,
@@ -75,7 +76,7 @@ class CodexCliAdapter:
                 "fork_session": request.fork_session,
                 "prompt": request.prompt,
                 "cwd": config.workspace_path,
-                "claude_binary": config.claude_bin,
+                "codex_binary": codex_bin,
                 "cli_argv": cmd,
             },
         )

@@ -110,6 +110,29 @@ def test_responses_messages_tools_and_tool_results_convert() -> None:
     assert payload["tool_choice"] == {"type": "tool", "name": "echo"}
 
 
+def test_responses_tool_choice_none_disables_forwarded_tools() -> None:
+    payload = responses_request_to_anthropic_payload(
+        {
+            "model": "deepseek/deepseek-chat",
+            "input": "Reply without tools",
+            "tools": [
+                {
+                    "type": "function",
+                    "name": "echo",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {"value": {"type": "string"}},
+                    },
+                }
+            ],
+            "tool_choice": "none",
+        }
+    )
+
+    assert "tools" not in payload
+    assert "tool_choice" not in payload
+
+
 def test_responses_unsupported_tool_type_is_clear() -> None:
     with pytest.raises(
         ResponsesConversionError, match="Unsupported Responses tool type"

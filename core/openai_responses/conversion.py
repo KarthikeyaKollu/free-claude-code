@@ -43,10 +43,11 @@ def responses_request_to_anthropic_payload(
     if isinstance(request.get("metadata"), dict):
         payload["metadata"] = request["metadata"]
 
+    raw_tool_choice = request.get("tool_choice")
     tools = _convert_tools(request.get("tools"))
-    if tools:
+    if tools and raw_tool_choice != "none":
         payload["tools"] = tools
-    tool_choice = _convert_tool_choice(request.get("tool_choice"))
+    tool_choice = _convert_tool_choice(raw_tool_choice)
     if tool_choice is not None:
         payload["tool_choice"] = tool_choice
 

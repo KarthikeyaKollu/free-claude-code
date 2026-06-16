@@ -147,7 +147,6 @@ class ClaudeCliAdapter:
             for key, value in base_env.items()
             if not key.startswith("ANTHROPIC_")
         }
-        env.pop("ANTHROPIC_API_KEY", None)
         env["ANTHROPIC_BASE_URL"] = proxy_root_url
         env["CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY"] = "1"
         env["CLAUDE_CODE_AUTO_COMPACT_WINDOW"] = _AUTO_COMPACT_WINDOW

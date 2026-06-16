@@ -202,7 +202,7 @@ def test_codex_adapter_builds_new_task_command_and_env() -> None:
         },
     )
 
-    assert invocation.argv[:3] == ("claude-test", "exec", "--json")
+    assert invocation.argv[:3] == ("codex", "exec", "--json")
     assert "--dangerously-bypass-approvals-and-sandbox" in invocation.argv
     assert "-C" in invocation.argv
     assert "/workspace" in invocation.argv
@@ -216,6 +216,22 @@ def test_codex_adapter_builds_new_task_command_and_env() -> None:
     assert "OPENAI_BASE_URL" not in invocation.env
     assert "CODEX_API_KEY" not in invocation.env
     assert invocation.trace_metadata["client_cli_id"] == "codex"
+    assert invocation.trace_metadata["codex_binary"] == "codex"
+    assert "claude_binary" not in invocation.trace_metadata
+    assert CODEX_CLI_ADAPTER.trace_stage == "codex_cli"
+    assert CODEX_CLI_ADAPTER.process_launch_event == "codex_cli.process.launch"
+    assert CODEX_CLI_ADAPTER.trace_source == "codex_cli"
+
+
+def test_codex_adapter_uses_explicit_codex_binary_when_provided() -> None:
+    invocation = CODEX_CLI_ADAPTER.build_task_invocation(
+        config=_config(codex_bin="codex-test"),
+        request=CliTaskRequest(prompt="hello"),
+        base_env={},
+    )
+
+    assert invocation.argv[:3] == ("codex-test", "exec", "--json")
+    assert invocation.trace_metadata["codex_binary"] == "codex-test"
 
 
 def test_codex_adapter_builds_resume_command() -> None:
@@ -225,7 +241,7 @@ def test_codex_adapter_builds_resume_command() -> None:
         base_env={},
     )
 
-    assert invocation.argv[:4] == ("claude-test", "exec", "resume", "--json")
+    assert invocation.argv[:4] == ("codex", "exec", "resume", "--json")
     assert "sess_123" in invocation.argv
     assert invocation.argv[-1] == "continue"
     assert invocation.trace_metadata["resume_session_id"] == "sess_123"
