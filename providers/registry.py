@@ -124,6 +124,12 @@ def _create_gemini(config: ProviderConfig, _settings: Settings) -> BaseProvider:
     return GeminiProvider(config)
 
 
+def _create_vertex_gemini(config: ProviderConfig, _settings: Settings) -> BaseProvider:
+    from providers.vertex_gemini import VertexGeminiProvider
+
+    return VertexGeminiProvider(config, settings=_settings)
+
+
 def _create_groq(config: ProviderConfig, _settings: Settings) -> BaseProvider:
     from providers.groq import GroqProvider
 
@@ -150,6 +156,7 @@ PROVIDER_FACTORIES: dict[str, ProviderFactory] = {
     "cerebras": _create_cerebras,
     "groq": _create_groq,
     "fireworks": _create_fireworks,
+    "vertex_gemini": _create_vertex_gemini,
     "zai": _create_zai,
     "lmstudio": _create_lmstudio,
     "llamacpp": _create_llamacpp,

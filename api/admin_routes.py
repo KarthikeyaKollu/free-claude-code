@@ -181,6 +181,9 @@ async def test_provider(provider_id: str, request: Request):
         provider = registry.get(provider_id, settings)
         infos = await provider.list_model_infos()
     except Exception as exc:
+        import traceback
+
+        traceback.print_exc()
         return {
             "provider_id": provider_id,
             "ok": False,
@@ -278,6 +281,9 @@ async def _check_local_provider(
             "status_code": response.status_code,
         }
     except Exception as exc:
+        import traceback
+
+        traceback.print_exc()
         return {
             "provider_id": provider_id,
             "status": "offline",

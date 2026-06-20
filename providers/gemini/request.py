@@ -179,8 +179,6 @@ def build_request_body(
 
     if thinking_enabled:
         _apply_thinking_config(extra_body)
-    else:
-        body["reasoning_effort"] = "none"
 
     if extra_body:
         body["extra_body"] = extra_body

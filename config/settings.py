@@ -108,6 +108,13 @@ class Settings(BaseSettings):
     # ==================== Google Gemini (Google AI Studio) ====================
     gemini_api_key: str = Field(default="", validation_alias="GEMINI_API_KEY")
 
+    # ==================== Vertex AI Gemini ====================
+    vertex_project: str = Field(default="", validation_alias="VERTEX_PROJECT")
+    vertex_region: str = Field(default="us-central1", validation_alias="VERTEX_REGION")
+    vertex_gemini_api_key: str = Field(
+        default="", validation_alias="VERTEX_GEMINI_API_KEY"
+    )
+
     # ==================== Groq (OpenAI-compatible) ====================
     groq_api_key: str = Field(default="", validation_alias="GROQ_API_KEY")
 

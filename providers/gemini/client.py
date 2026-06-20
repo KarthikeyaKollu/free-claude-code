@@ -42,8 +42,16 @@ class GeminiProvider(OpenAIChatTransport):
     def _build_request_body(
         self, request: Any, thinking_enabled: bool | None = None
     ) -> dict:
-        return build_request_body(
+        effective_thinking_enabled = self._is_thinking_enabled(
+            request, thinking_enabled
+        )
+        body = build_request_body(
             request,
-            thinking_enabled=self._is_thinking_enabled(request, thinking_enabled),
+            thinking_enabled=effective_thinking_enabled,
             tool_call_extra_content_by_id=self._tool_call_extra_content_by_id,
         )
+        if not effective_thinking_enabled:
+            # Google AI Studio OpenAI-compatible endpoint uses "none" to
+            # explicitly disable thinking (Gemini 2.0 convention).
+            body["reasoning_effort"] = "none"
+        return body

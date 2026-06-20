@@ -58,6 +58,7 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
     "nvidia_nim": ProviderDescriptor(
         provider_id="nvidia_nim",
         transport_type="openai_chat",
+        static_credential="used_via_adc",
         credential_env="NVIDIA_NIM_API_KEY",
         credential_url="https://build.nvidia.com/settings/api-keys",
         credential_attr="nvidia_nim_api_key",
@@ -78,6 +79,7 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
     "gemini": ProviderDescriptor(
         provider_id="gemini",
         transport_type="openai_chat",
+        static_credential="used_via_adc",
         credential_env="GEMINI_API_KEY",
         credential_url="https://aistudio.google.com/apikey",
         credential_attr="gemini_api_key",
@@ -97,6 +99,7 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
     "mistral": ProviderDescriptor(
         provider_id="mistral",
         transport_type="openai_chat",
+        static_credential="used_via_adc",
         credential_env="MISTRAL_API_KEY",
         credential_url="https://console.mistral.ai/",
         credential_attr="mistral_api_key",
@@ -107,6 +110,7 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
     "mistral_codestral": ProviderDescriptor(
         provider_id="mistral_codestral",
         transport_type="openai_chat",
+        static_credential="used_via_adc",
         credential_env="CODESTRAL_API_KEY",
         credential_url="https://console.mistral.ai/",
         credential_attr="codestral_api_key",
@@ -117,6 +121,7 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
     "opencode": ProviderDescriptor(
         provider_id="opencode",
         transport_type="openai_chat",
+        static_credential="used_via_adc",
         credential_env="OPENCODE_API_KEY",
         credential_url="https://opencode.ai/auth",
         credential_attr="opencode_api_key",
@@ -127,6 +132,7 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
     "opencode_go": ProviderDescriptor(
         provider_id="opencode_go",
         transport_type="openai_chat",
+        static_credential="used_via_adc",
         credential_env="OPENCODE_API_KEY",
         credential_url="https://opencode.ai/auth",
         credential_attr="opencode_api_key",
@@ -163,6 +169,7 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
     "cerebras": ProviderDescriptor(
         provider_id="cerebras",
         transport_type="openai_chat",
+        static_credential="used_via_adc",
         credential_env="CEREBRAS_API_KEY",
         credential_url="https://cloud.cerebras.ai",
         credential_attr="cerebras_api_key",
@@ -173,6 +180,7 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
     "groq": ProviderDescriptor(
         provider_id="groq",
         transport_type="openai_chat",
+        static_credential="used_via_adc",
         credential_env="GROQ_API_KEY",
         credential_url="https://console.groq.com/keys",
         credential_attr="groq_api_key",
@@ -196,6 +204,13 @@ PROVIDER_CATALOG: dict[str, ProviderDescriptor] = {
             "native_anthropic",
             "rate_limit",
         ),
+    ),
+    "vertex_gemini": ProviderDescriptor(
+        provider_id="vertex_gemini",
+        transport_type="openai_chat",
+        static_credential="used_via_adc",
+        credential_env="VERTEX_PROJECT",
+        capabilities=("chat", "streaming", "tools", "thinking", "rate_limit"),
     ),
     "zai": ProviderDescriptor(
         provider_id="zai",
