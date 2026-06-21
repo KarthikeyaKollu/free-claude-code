@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import asyncio
 import os
+from typing import Any
 
 import google.auth
 import google.auth.transport.requests
@@ -60,6 +62,15 @@ class VertexGeminiProvider(OpenAIChatTransport):
             base_url=config.base_url or base_url,
             api_key=creds.token,
         )
+        self._creds = creds
+        self._auth_req = req
+
+    async def _create_stream(self, body: dict) -> tuple[Any, dict]:
+        if not self._creds.valid or self._creds.expired:
+            await asyncio.to_thread(self._creds.refresh, self._auth_req)
+            self._client.api_key = self._creds.token
+
+        return await super()._create_stream(body)
 
     async def list_model_ids(self) -> frozenset[str]:
         return frozenset(
