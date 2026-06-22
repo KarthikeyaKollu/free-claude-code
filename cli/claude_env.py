@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-CLAUDE_CODE_AUTO_COMPACT_WINDOW = "190000"
+CLAUDE_CODE_AUTO_COMPACT_WINDOW = "1000000"
 CLAUDE_NO_AUTH_SENTINEL = "fcc-no-auth"
 
 
