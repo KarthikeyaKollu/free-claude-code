@@ -75,8 +75,8 @@ class VertexGeminiProvider(OpenAIChatTransport):
     async def list_model_ids(self) -> frozenset[str]:
         return frozenset(
             [
-                "claude-3-5-vertex-gemini-3.1-pro",
-                "claude-3-5-vertex-gemini-3.1-flash-lite",
+                "claude-opus-4-8[1m]",
+                "claude-sonnet-4-6[1m]",
             ]
         )
 
@@ -84,9 +84,9 @@ class VertexGeminiProvider(OpenAIChatTransport):
         request_copy = request.copy() if hasattr(request, "copy") else request
         model_name = getattr(request_copy, "model", "")
         if isinstance(model_name, str):
-            if "vertex-gemini-3.1-pro" in model_name:
+            if "claude-opus" in model_name:
                 request_copy.model = "google/gemini-3.1-pro-preview"
-            elif "vertex-gemini-3.1-flash-lite" in model_name:
+            elif "claude-sonnet" in model_name:
                 request_copy.model = "google/gemini-3.1-flash-lite"
 
         body = build_request_body(
@@ -97,9 +97,9 @@ class VertexGeminiProvider(OpenAIChatTransport):
         if body.get("reasoning_effort") == "none":
             del body["reasoning_effort"]
 
-        if body.get("model") == "claude-3-5-vertex-gemini-3.1-pro":
+        if body.get("model") == "claude-opus-4-8[1m]":
             body["model"] = "google/gemini-3.1-pro-preview"
-        elif body.get("model") == "claude-3-5-vertex-gemini-3.1-flash-lite":
+        elif body.get("model") == "claude-sonnet-4-6[1m]":
             body["model"] = "google/gemini-3.1-flash-lite"
 
         return body
